@@ -1,0 +1,22 @@
+section {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+code {
+  background-color: lightgray;
+  white-space: pre;
+}
+
+.code {
+  background-color: lightgray;
+  padding: 16px;
+  width: max-content;
+}
+.code code {
+  display:block;
+  font-weight: 700;
+}

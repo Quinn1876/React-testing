@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <Title>Test Driven Development in React</Title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Test Driven Development in ReactJS</h1>
+
+    <section>
+      <h2>RITE testing principles</h2>
+      <ul>
+        <li>Readable</li>
+        <li>Isolated(unit Tests) / Integrated(funtional and integration tests)</li>
+        <li>Thorough</li>
+        <li>Explicit</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Unit Testing</h2>
+      <h3>Five Questions Every Unit Test must Answer</h3>
+      <ol>
+        <li>What is the unit under test (module, function, class, ect)?</li>
+        <li>What should it do? (Prose Description)</li>
+        <li>What was the actual output?</li>
+        <li>What was the expected output?</li>
+        <li>How do you reproduce the failure?</li>
+      </ol>
+
+      <h3>What to unit test?</h3>
+      <p>
+        In React, you should unit test Pure Components and Hooks. Pure Components are easy
+        to test because given a set of arguments, they should always return the same value.
+        We test hooks to ensure that they behave as expected when actions are called on them.
+      </p>
+
+      <h3>What not to unit test?</h3>
+      <p>
+        Stateful components that provide data from hooks into pure components should not be
+        unit tested. Instead functionallity tests should be used. The idea behind this is that
+        if you test your hooks and pure components for expected behaviour and edge cases,
+        then you will be writing a lot of redundent tests for the container components that
+        are pasing the state from the hook into the pure components.
+      </p>
+
+
+      <h3>Frameworks</h3>
+      <ul>
+        <li>RITEway</li>
+      </ul>
+
+
+      <h3>Using the RITEway library</h3>
+      <a href="https://github.com/ericelliott/riteway">Github repo</a>
+      <p>
+        The library is based on a guiding principle that a Deep Equality Assertion is all that
+        is needed to write clean, readable, and effective unit tests.
+        Each unit being tested is described by a <code>describe()</code> block.
+        Each test is described by an assert block:
+      </p>
+      <div class="code">
+        <code>assert({</code>
+        <code>  given: Any,</code>
+        <code>  should: String,</code>
+        <code>  actual: Any,</code>
+        <code>  expected: Any</code>
+        <code>}) => Void</code>
+      </div>
+
+      <h4>Imports for RITEway test files</h4>
+      <div class="code">
+        <code>import { describe } from 'riteway';</code>
+        <code>import render from 'riteway/render-component';</code>
+        <code>import React from 'react';</code>
+      </div>
+
+      <h4>Example Test</h4>
+      <div class="code">
+        <code>describe('Hello component', async assert => {</code>
+        <code>  const userName = 'Spiderman';</code>
+        <code>  const $ = render(<Hello userName={userName} />);  assert({</code>
+        <code>    given: 'a username',</code>
+        <code>    should: 'Render a greeting to the correct username.',</code>
+        <code>    actual: $('.greeting')</code>
+        <code>      .html()</code>
+        <code>      .trim(),</code>
+        <code>    expected: `Hello, ${userName}!`</code>
+        <code>  });</code>
+        <code>});</code>
+      </div>
+
+      <h6>References</h6>
+      <ul>
+        <li><a href="https://medium.com/javascript-scene/unit-testing-react-components-aeda9a44aae2">Unit Testing React Components</a></li>
+        <li><a href="https://medium.com/javascript-scene/rethinking-unit-test-assertions-55f59358253f">Rethinking Unit Test Assertions</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Functional Testing</h2>
+
+      <h3>Frameworks</h3>
+      <ul>
+        <li>Jest</li>
+        <li>react-testing-library</li>
+        <li>enzyme</li>
+        <li>snapshot-testing</li>
+      </ul>
+
+      <h3>The react-testing-library (RTL)</h3>
+      <p>
+        "The more your tests resemble the way your software is used, the more confidence they can give you." - Kent C Dodds
+      </p>
+      <p>
+        Tests are structured such that they do not care about the
+        implementation details of the components. This way, component refactoring should not
+        break tests.
+      </p>
+
+      <p><strong>RTL is Dependant on Jest</strong></p>
+
+      <h4>Imports for testing files:</h4>
+      <div class="code">
+        <code>import 'jestdom/extend-expect'</code>
+        <code>import 'react-testing-library/cleanup-after-each'</code>
+        <code>import React from 'react'</code>
+        <code>import { render, fireEvent } from 'react-testing-library</code>
+        <code>import Component from './Component-source-location</code>
+      </div>
+
+      <h4>Test Utilites</h4>
+      <hr/>
+      <h5>render</h5>
+      <p>
+        The render method places your component into a DOM node and renders it to the ReactDOM.
+        It then returns the DOM node as <code>container</code> as well as a spread of queries.
+      </p>
+
+      <hr/>
+
+      <h5>List of Queries Available</h5>
+      <label>prefix</label>
+      <ul>
+        <li>getBy</li>
+        <li>findBy</li>
+        <li>queryBy</li>
+        <li>getAllBy</li>
+        <li>findAllBy</li>
+        <li>queryAllBy</li>
+      </ul>
+      <label>suffix</label>
+      <ul>
+        <li>ByLabelText</li>
+        <li>ByPlaceholderText</li>
+        <li>ByText</li>
+        <li>ByDisplayValue</li>
+        <li>ByAltText</li>
+        <li>ByTitle</li>
+        <li>ByRole</li>
+        <li>ByTestId</li>
+      </ul>
+
+      <hr/>
+
+      <h5>fireEvent</h5>
+      <p>
+        fireEvent allows you to manipulate the DOM by targeting nodes that you have queried with events.
+      </p>
+
+      <h5><a href="./rtl-events.html">List of Events</a></h5>
+
+      <hr/>
+
+      <h5>rerender</h5>
+      <p>
+        Used to rerender a component after it's props have been changed.
+        Example: A controled Field Only updates in response to a change in it's value field.
+        So you change the value and then rerender the component. And assert the updated value.
+      </p>
+
+      <hr/>
+
+      <h6>References</h6>
+      <ul>
+        <li><a href="https://blog.echobind.com/writing-functional-tests-with-react-testing-library-part-1-470870ee1a6">How to Write Functional Tests in React (Part 1)</a></li>
+        <li><a href="https://testing-library.com/docs/react-testing-library/intro">RTL Docs</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>React Testing Recipes</h2>
+
+      <h3>Setup and Teardown</h3>
+      <p>
+        Setup and Teardown allows you to make sure that your tests are running in isolation.
+        Without this, your tests can become dependant on eachother. This is not wanted behaviour.
+      </p>
+
+      <h6>References</h6>
+      <ul>
+        <li><a href="https://reactjs.org/docs/testing-recipes.html">React Docs - Testing Recipes</a></li>
+      </ul>
+    </section>
+  </body>
+</html>
